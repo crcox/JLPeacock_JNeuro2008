@@ -1,0 +1,36 @@
+2013 Mar 15
+
+Hi Chris,
+
+As requested, I'm getting you access to the data from the Phase 1 ("LTM task") from my 2008 JNeuro paper in which people viewed a famous face, a famous place, or a common object for 5 secs on each trial. The diagram for this task is in Fig 1A of the paper, and the details of the task are described in the Methods section on that same page.
+
+There is data for 10 subjects. It is organized into 3 folders:
+
+1.  anats/
+2.  funcs/
+3.  regs/
+
+---
+
+1. Contains AFNI files for the anatomical scan (1x1x1 mm^3) for each subject, warped to a common space using the TT_N27 atlas in AFNI.
+
+2. Contains the EPI data (3.75x3.75x4 mm^3) for the LTM task. There are 6 functional runs for each subject (195 TRs per run, 1170 TRs total). The data have been preprocessed (see paper for details) and aligned to the anatomical scan. 
+
+The naming convention is:
+
+{SUBNUM}train_pp{RUNNUM}_at+tlrc
+
+where SUBNUM = 01 ... 10, and RUNNUM = 1 ... 6
+
+3. For each subject, there are 2 regressor files: 
+
+1) mindread{SUBNUM}rain_runs.m
+2) mindread{SUBNUM}train_conds.m
+
+The "runs" regressor is a 1x1170 vector that specifies which run (from 1 to 6) to which each of the 1170 TRs in the full dataset belongs. For most subjects, this should simply be a vector in which the first 195 entries are "1", the next 195 are "2", and so on. There may be some exceptions (bad/missing data in a subject here or there), I don't remember for sure. 
+
+The "conds" regressor is a 3x1170 matrix that specifies which category (row 1: FACE, row 2: PLACE: row 3: OBJECT) to which each of the 1170 TRs belongs. Each trial is 26 secs long (i.e., 13 2-sec TRs). I configured the conds such that the first 5 TRs (10 sec) of each trial are labeled with a "1" and the remaining 8 TRs in the trial are labeled as "0". Note that these regressors are *unadjusted* for hemodynamic lag. 
+
+That should be everything you need! (If you need the identify of the category exemplars for each person, I can get that to you, but I think you're just working on the category-level at this point in time). 
+
+- jarrod

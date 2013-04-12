@@ -1,0 +1,38 @@
+There is data for 10 subjects. It is organized into 3 folders:
+
+1.  anats/
+2.  funcs/
+3.  regs/
+
+----
+
+1.  anats/
+
+Contains AFNI files for the anatomical scan (0.938 x 0.938 x 4 mm^3) for each subject.
+
+2.  funcs/
+
+Contains the EPI data (3.75 x 3.75 x 4 mm^3) for the LTM task. There are 6 functional runs for each subject (195 TRs per run, 1170 TRs total). The data have been preprocessed (see paper for details).
+
+The naming convention is:
+
+{SUBNUM}train_pp{RUNNUM}+orig
+
+where SUBNUM = 01 ... 10, and RUNNUM = 1 ... 6
+
+3.  regs/
+
+For each subject, there are 2 regressor files: 
+
+1) mindread{SUBNUM}rain_runs.m
+2) mindread{SUBNUM}train_conds.m
+
+where SUBNUM = 01 ... 10
+
+The "runs" regressor is a 1x1170 vector that specifies which run (from 1 to 6) to which each of the 1170 TRs in the full dataset belongs. For most subjects, this should simply be a vector in which the first 195 entries are "1", the next 195 are "2", and so on. There may be some exceptions (bad/missing data in a subject here or there), I don't remember for sure. 
+
+The "conds" regressor is a 3x1170 matrix that specifies which category (row 1: FACE, row 2: PLACE: row 3: OBJECT) to which each of the 1170 TRs belongs. Each trial is 26 secs long (i.e., 13 2-sec TRs). I configured the conds such that the first 5 TRs (10 sec) of each trial are labeled with a "1" and the remaining 8 TRs in the trial are labeled as "0". However, the image was only on the screen for 5 secs (onset=2s, offset=7s in each trial). Note that these regressors are *unadjusted* for hemodynamic lag.
+
+That should be everything you need! Let me know if you run into any troubles or need further clarification.
+
+- jarrod
